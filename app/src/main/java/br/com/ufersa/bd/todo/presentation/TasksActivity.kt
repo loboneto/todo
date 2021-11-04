@@ -1,9 +1,7 @@
 package br.com.ufersa.bd.todo.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import br.com.ufersa.bd.todo.R
-import br.com.ufersa.bd.todo.databinding.ActivityMainBinding
+import androidx.appcompat.app.AppCompatActivity
 import br.com.ufersa.bd.todo.databinding.ActivityTasksBinding
 import br.com.ufersa.bd.todo.domain.utils.viewBindings
 
