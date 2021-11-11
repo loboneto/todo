@@ -77,6 +77,7 @@ class SubtasksActivity : AppCompatActivity(), View.OnClickListener {
                 NewSubtaskDialog().apply {
                     arguments = Bundle().apply {
                         putInt("taskId", taskIdentifier)
+                        show(supportFragmentManager, "")
                     }
                 }
             }
