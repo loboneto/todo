@@ -1,4 +1,4 @@
-package br.com.ufersa.bd.todo.presentation
+package br.com.ufersa.bd.todo.presentation.subtask
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

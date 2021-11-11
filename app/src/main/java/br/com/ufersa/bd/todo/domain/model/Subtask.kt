@@ -8,12 +8,12 @@ import androidx.room.PrimaryKey
 
 @Entity
 class Subtask(
-    @ForeignKey(
-        entity = Task::class,
-        onDelete = CASCADE,
-        parentColumns = ["id"],
-        childColumns = ["id"]
-    )
+//    @ForeignKey(
+//        entity = Task::class,
+//        onDelete = CASCADE,
+//        parentColumns = ["id"],
+//        childColumns = ["taskId"]
+//    )
     @ColumnInfo(name = "taskId")
     var taskId: Int,
     @PrimaryKey(autoGenerate = true)

@@ -4,22 +4,33 @@ import br.com.ufersa.bd.todo.domain.model.Task
 import br.com.ufersa.bd.todo.domain.local.TasksDatabase
 import br.com.ufersa.bd.todo.data.RoomState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class RoomDataSource(private val database: TasksDatabase) {
+interface TaskDataSource {
+    fun save(task: Task): Flow<RoomState<Unit>>
+    fun delete(task: Task): Flow<RoomState<Unit>>
+    fun fetch(): Flow<RoomState<List<Task>>>
+}
 
-    fun save(task: Task) = flow {
+class TaskDataSourceImpl @Inject constructor(
+    private val database: TasksDatabase
+) : TaskDataSource {
+
+    override fun save(task: Task) = flow {
         emit(RoomState.Loading)
         try {
             database.tasksDao().save(task)
             emit(RoomState.Success(Unit))
         } catch (e: Exception) {
+            e.printStackTrace()
             emit(RoomState.Failure(e))
         }
     }.flowOn(Dispatchers.IO)
 
-    fun delete(task: Task) = flow {
+    override fun delete(task: Task) = flow {
         emit(RoomState.Loading)
         try {
             database.tasksDao().delete(task)
@@ -30,7 +41,7 @@ class RoomDataSource(private val database: TasksDatabase) {
         }
     }.flowOn(Dispatchers.IO)
 
-    fun fetch() = flow {
+    override fun fetch() = flow {
         emit(RoomState.Loading)
         try {
             val heroes: List<Task> = database.tasksDao().get()

@@ -5,17 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "tasks")
-class Task(
+@Entity
+data class Task(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Int = 0,
     @ColumnInfo(name = "name")
     var name: String = "",
-    @ColumnInfo(name = "subtasks")
-    var subtasks: List<Subtask> = emptyList(),
     @ColumnInfo(name = "done")
     var done: Boolean = false,
-    @ColumnInfo(name = "subtasks")
+    @ColumnInfo(name = "updatedAt")
     var updatedAt: Long = 0L
-) : Serializable
+)
