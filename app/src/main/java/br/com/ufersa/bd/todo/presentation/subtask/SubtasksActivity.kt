@@ -28,6 +28,7 @@ class SubtasksActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        binding.fabNewSubtask.setOnClickListener(this)
         setUpActionBar()
         setUpRecyclerView()
         getSubtasks()
