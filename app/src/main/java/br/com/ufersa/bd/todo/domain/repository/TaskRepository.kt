@@ -11,7 +11,8 @@ import javax.inject.Inject
 interface TaskRepository {
     fun save(task: Task): LiveData<RoomState<Unit>>
     fun delete(task: Task): LiveData<RoomState<Unit>>
-    fun fetch(): LiveData<RoomState<List<Task>>>
+    fun get(taskId: Int): LiveData<RoomState<Task>>
+    fun getAll(): LiveData<RoomState<List<Task>>>
 }
 
 class TaskRepositoryImpl @Inject constructor(
@@ -26,7 +27,11 @@ class TaskRepositoryImpl @Inject constructor(
         emitSource(dataSource.delete(task).asLiveData())
     }
 
-    override fun fetch() = liveData {
-        emitSource(dataSource.fetch().asLiveData())
+    override fun get(taskId: Int) = liveData {
+        emitSource(dataSource.get(taskId).asLiveData())
+    }
+
+    override fun getAll() = liveData {
+        emitSource(dataSource.getAll().asLiveData())
     }
 }

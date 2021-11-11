@@ -8,27 +8,34 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.com.ufersa.bd.todo.R
 import br.com.ufersa.bd.todo.data.RoomState
 import br.com.ufersa.bd.todo.databinding.ActivityTasksBinding
-import br.com.ufersa.bd.todo.domain.utils.openActivity
 import br.com.ufersa.bd.todo.domain.utils.showToast
 import br.com.ufersa.bd.todo.domain.utils.viewBindings
-import br.com.ufersa.bd.todo.presentation.NewTaskDialog
+import br.com.ufersa.bd.todo.presentation.TaskViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TasksActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+class TasksActivity : AppCompatActivity(), View.OnClickListener,
+    SwipeRefreshLayout.OnRefreshListener {
 
     private val binding by viewBindings(ActivityTasksBinding::inflate)
 
     private val viewModel by viewModels<TaskViewModel>()
 
-    private val adapter = TaskAdapter()
+    private val adapter by lazy {
+        TaskAdapter(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.fabNewTask.setOnClickListener(this)
+        setUpActionBar()
         setUpRecyclerView()
         onRefresh()
+    }
+
+    private fun setUpActionBar() {
+        supportActionBar?.title = "Tarefas"
     }
 
     private fun setUpRecyclerView() {
@@ -38,7 +45,7 @@ class TasksActivity : AppCompatActivity(), View.OnClickListener, SwipeRefreshLay
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.fab_new_task -> {
                 NewTaskDialog().show(supportFragmentManager, "")
             }

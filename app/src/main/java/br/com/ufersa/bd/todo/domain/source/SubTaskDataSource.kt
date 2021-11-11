@@ -2,28 +2,28 @@ package br.com.ufersa.bd.todo.domain.source
 
 import br.com.ufersa.bd.todo.data.RoomState
 import br.com.ufersa.bd.todo.domain.local.TasksDatabase
-import br.com.ufersa.bd.todo.domain.model.Task
+import br.com.ufersa.bd.todo.domain.model.Subtask
+import br.com.ufersa.bd.todo.domain.model.TaskAndSubtask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-interface TaskDataSource {
-    fun save(task: Task): Flow<RoomState<Unit>>
-    fun delete(task: Task): Flow<RoomState<Unit>>
-    fun get(taskId: Int): Flow<RoomState<Task>>
-    fun getAll(): Flow<RoomState<List<Task>>>
+interface SubtaskDataSource {
+    fun save(subtask: Subtask): Flow<RoomState<Unit>>
+    fun delete(subtask: Subtask): Flow<RoomState<Unit>>
+    fun getAllBy(taskId: Int): Flow<RoomState<TaskAndSubtask>>
 }
 
-class TaskDataSourceImpl @Inject constructor(
+class SubtaskDataSourceImpl @Inject constructor(
     private val database: TasksDatabase
-) : TaskDataSource {
+) : SubtaskDataSource {
 
-    override fun save(task: Task) = flow {
+    override fun save(subtask: Subtask) = flow {
         emit(RoomState.Loading)
         try {
-            database.tasksDao().save(task)
+            database.subtasksDao().save(subtask)
             emit(RoomState.Success(Unit))
         } catch (e: Exception) {
             e.printStackTrace()
@@ -31,10 +31,10 @@ class TaskDataSourceImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    override fun delete(task: Task) = flow {
+    override fun delete(subtask: Subtask) = flow {
         emit(RoomState.Loading)
         try {
-            database.tasksDao().delete(task)
+            database.subtasksDao().delete(subtask)
             emit(RoomState.Success(Unit))
         } catch (e: Exception) {
             e.printStackTrace()
@@ -42,22 +42,11 @@ class TaskDataSourceImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    override fun get(taskId: Int) = flow {
+    override fun getAllBy(taskId: Int) = flow {
         emit(RoomState.Loading)
         try {
-            val tasks: Task = database.tasksDao().get(taskId)
-            emit(RoomState.Success(tasks))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(RoomState.Failure(e))
-        }
-    }.flowOn(Dispatchers.IO)
-
-    override fun getAll() = flow {
-        emit(RoomState.Loading)
-        try {
-            val tasks: List<Task> = database.tasksDao().get()
-            emit(RoomState.Success(tasks))
+            val subtasks: TaskAndSubtask = database.subtasksDao().getAllBy(taskId)
+            emit(RoomState.Success(subtasks))
         } catch (e: Exception) {
             e.printStackTrace()
             emit(RoomState.Failure(e))

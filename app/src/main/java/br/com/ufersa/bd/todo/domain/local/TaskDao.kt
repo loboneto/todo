@@ -1,10 +1,7 @@
 package br.com.ufersa.bd.todo.domain.local
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
+import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import androidx.room.Query
 import br.com.ufersa.bd.todo.domain.model.Task
 
 @Dao
@@ -14,6 +11,10 @@ interface TaskDao {
 
     @Delete
     fun delete(task: Task)
+
+    @Transaction
+    @Query("SELECT * FROM Task where id = :taskId")
+    fun get(taskId: Int): Task
 
     @Query("SELECT * FROM Task")
     fun get(): List<Task>

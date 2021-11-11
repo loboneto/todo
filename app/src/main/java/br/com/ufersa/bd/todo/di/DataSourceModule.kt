@@ -1,5 +1,7 @@
 package br.com.ufersa.bd.todo.di
 
+import br.com.ufersa.bd.todo.domain.source.SubtaskDataSource
+import br.com.ufersa.bd.todo.domain.source.SubtaskDataSourceImpl
 import br.com.ufersa.bd.todo.domain.source.TaskDataSource
 import br.com.ufersa.bd.todo.domain.source.TaskDataSourceImpl
 import dagger.Binds
@@ -11,7 +13,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataSourceModule {
+
     @Singleton
     @Binds
-    abstract fun bindsTaskDataSource(taskDataSourceImpl: TaskDataSourceImpl): TaskDataSource
+    abstract fun bindsTaskDataSource(
+        taskDataSourceImpl: TaskDataSourceImpl
+    ): TaskDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindsSubtaskDataSource(
+        subtaskDataSourceImpl: SubtaskDataSourceImpl
+    ): SubtaskDataSource
 }

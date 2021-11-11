@@ -6,21 +6,22 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(
+    foreignKeys = [ForeignKey(
+        entity = Task::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("taskId"),
+        onDelete = CASCADE
+    )]
+)
 class Subtask(
-//    @ForeignKey(
-//        entity = Task::class,
-//        onDelete = CASCADE,
-//        parentColumns = ["id"],
-//        childColumns = ["taskId"]
-//    )
-    @ColumnInfo(name = "taskId")
-    var taskId: Int,
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Int,
+    @ColumnInfo(name = "subtaskId")
+    var subtaskId: Int,
     @ColumnInfo(name = "description")
-    var description: String = "",
+    var description: String,
     @ColumnInfo(name = "done")
-    var done: Boolean = false,
+    var done: Boolean,
+    @ColumnInfo(index = true)
+    var taskId: Int
 )

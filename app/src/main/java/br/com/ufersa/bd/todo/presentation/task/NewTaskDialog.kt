@@ -1,8 +1,6 @@
-package br.com.ufersa.bd.todo.presentation
+package br.com.ufersa.bd.todo.presentation.task
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +12,7 @@ import br.com.ufersa.bd.todo.data.RoomState
 import br.com.ufersa.bd.todo.databinding.DialogNewTaskBinding
 import br.com.ufersa.bd.todo.domain.model.Task
 import br.com.ufersa.bd.todo.domain.utils.showToast
-import br.com.ufersa.bd.todo.presentation.task.TaskViewModel
-import br.com.ufersa.bd.todo.presentation.task.TasksActivity
+import br.com.ufersa.bd.todo.presentation.TaskViewModel
 import java.util.*
 
 class NewTaskDialog : DialogFragment(), View.OnClickListener {
@@ -23,8 +20,6 @@ class NewTaskDialog : DialogFragment(), View.OnClickListener {
     private val viewModel by activityViewModels<TaskViewModel>()
 
     private var binding: DialogNewTaskBinding? = null
-
-    private var newTask = Task()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,13 +36,6 @@ class NewTaskDialog : DialogFragment(), View.OnClickListener {
     }
 
     private fun setListeners() {
-        binding?.editTextTaskName?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                newTask.name = s.toString()
-            }
-        })
         binding?.buttonNewTask?.setOnClickListener(this)
     }
 
@@ -55,25 +43,15 @@ class NewTaskDialog : DialogFragment(), View.OnClickListener {
         viewModel.save(task).observe(this) { state ->
             when (state) {
                 RoomState.Loading -> {
-                    //binding.swipeTasks.isRefreshing = true
-                    //binding.fabNewTask.hide()
+
                 }
                 is RoomState.Success -> {
-                    //binding.swipeTasks.isRefreshing = false
-                    //adapter.tasks = state.data
-                    //if (state.data.isEmpty()) {
-                    //    showToast("Nenhuma tarefa cadastrada!")
-                    //}
-                    //binding.fabNewTask.show()
                     (activity as? TasksActivity)?.onRefresh()
                     dismiss()
                 }
                 is RoomState.Failure -> {
                     activity?.showToast("Erro ao salvar tarefa!")
                     dismiss()
-                    //binding.swipeTasks.isRefreshing = false
-                    //binding.fabNewTask.show()
-                    //showToast("Erro ao obter lista de tarefas")
                 }
             }
         }
@@ -82,15 +60,21 @@ class NewTaskDialog : DialogFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.button_new_task -> {
-                if (newTask.name.isNotEmpty()) {
-                    newTask.updatedAt = Date().time
+                val name = binding?.editTextTaskName?.text.toString()
+                if (name.isNotEmpty()) {
+                    val newTask = Task(
+                        id = 0,
+                        name = name,
+                        done = false,
+                        updatedAt = Date().time
+                    )
                     addTask(newTask)
                     return
                 }
 
                 Toast.makeText(
                     requireContext(),
-                    "Necessário inserir um nome!",
+                    "Necessário inserir um nome pra tarefa!",
                     Toast.LENGTH_LONG
                 ).show()
             }
