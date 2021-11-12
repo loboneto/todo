@@ -24,6 +24,7 @@
             android:exported="true" />
         <activity
             android:name=".presentation.launch.LauncherActivity"
+            android:theme="@style/LauncherScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
