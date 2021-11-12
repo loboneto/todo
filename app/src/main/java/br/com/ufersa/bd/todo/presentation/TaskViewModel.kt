@@ -31,16 +31,32 @@ class TaskViewModel @ViewModelInject constructor(
         emitSource(repository.getAll())
     }
 
+    fun markAsDone(taskId: Int, done: Boolean) = liveData {
+        emitSource(repository.markAsDone(taskId, done))
+    }
+
     // endregion Task
 
     // region SubTask
+
+    fun getSubtask(subtaskId: Int) = liveData {
+        emitSource(subtaskRepository.get(subtaskId))
+    }
 
     fun save(subtask: Subtask) = liveData {
         emitSource(subtaskRepository.save(subtask))
     }
 
+    fun delete(subtask: Subtask) = liveData {
+        emitSource(subtaskRepository.delete(subtask))
+    }
+
     fun getSubtasks(taskId: Int) = liveData {
         emitSource(subtaskRepository.getAllBy(taskId))
+    }
+
+    fun markSubtaskAsDone(subtaskId: Int, done: Boolean) = liveData {
+        emitSource(subtaskRepository.markAsDone(subtaskId, done))
     }
 
     // endregion SubTask

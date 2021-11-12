@@ -13,10 +13,15 @@ interface SubtaskDao {
     @Delete
     suspend fun delete(subtask: Subtask)
 
-    @Query("SELECT * FROM task")
-    suspend fun getAll(): List<TaskAndSubtask>
+    @Transaction
+    @Query("SELECT * FROM Subtask WHERE subtaskId = :subtaskId")
+    suspend fun get(subtaskId: Int): Subtask
 
     @Transaction
     @Query("SELECT * FROM task WHERE id = :taskId")
     suspend fun getAllBy(taskId: Int): TaskAndSubtask
+
+    @Transaction
+    @Query("UPDATE Subtask SET done = :done WHERE subtaskId = :subtaskId")
+    fun markAsDone(subtaskId: Int, done: Boolean = true): Int
 }

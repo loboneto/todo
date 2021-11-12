@@ -13,7 +13,9 @@ import javax.inject.Inject
 interface SubtaskDataSource {
     fun save(subtask: Subtask): Flow<RoomState<Unit>>
     fun delete(subtask: Subtask): Flow<RoomState<Unit>>
+    fun get(subtaskId: Int): Flow<RoomState<Subtask>>
     fun getAllBy(taskId: Int): Flow<RoomState<TaskAndSubtask>>
+    fun markAsDone(subtaskId: Int, done: Boolean): Flow<RoomState<Unit>>
 }
 
 class SubtaskDataSourceImpl @Inject constructor(
@@ -42,6 +44,17 @@ class SubtaskDataSourceImpl @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
+    override fun get(subtaskId: Int) = flow {
+        emit(RoomState.Loading)
+        try {
+            val subtasks = database.subtasksDao().get(subtaskId)
+            emit(RoomState.Success(subtasks))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(RoomState.Failure(e))
+        }
+    }.flowOn(Dispatchers.IO)
+
     override fun getAllBy(taskId: Int) = flow {
         emit(RoomState.Loading)
         try {
@@ -52,4 +65,16 @@ class SubtaskDataSourceImpl @Inject constructor(
             emit(RoomState.Failure(e))
         }
     }.flowOn(Dispatchers.IO)
+
+    override fun markAsDone(subtaskId: Int, done: Boolean) = flow {
+        emit(RoomState.Loading)
+        try {
+            database.subtasksDao().markAsDone(subtaskId, done)
+            emit(RoomState.Success(Unit))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(RoomState.Failure(e))
+        }
+    }.flowOn(Dispatchers.IO)
+
 }

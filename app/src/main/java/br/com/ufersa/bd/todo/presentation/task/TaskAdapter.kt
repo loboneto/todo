@@ -36,7 +36,7 @@ class TaskAdapter(private val activity: TasksActivity) :
             binding.textViewSubtaskName.text = task.name
             binding.checkBoxTaskDone.isChecked = task.done
             binding.root.setOnLongClickListener {
-                DeleteTaskBottomSheet().apply {
+                TaskActionsBottomSheet().apply {
                     arguments = Bundle().apply { putInt("task", task.id) }
                     show(activity.supportFragmentManager, "")
                 }

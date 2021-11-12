@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background"
-    android:clipToPadding="false"
-    android:paddingVertical="16dp">
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/text_view_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Excluir tarefa"
+        android:text="O que fazer?"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -20,6 +19,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/separator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <View
         android:id="@+id/separator"
@@ -31,24 +41,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_view_title" />
 
-    <TextView
-        android:id="@+id/text_view_task_name"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_mark_as_done"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Quer realmente excluir a tarefa?"
+        android:padding="12dp"
+        android:text="Des/marcar como concluída"
         android:textAlignment="center"
-        app:cardCornerRadius="12dp"
+        android:textAllCaps="false"
+        android:textSize="20sp"
         app:cardElevation="0dp"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/separator" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_new_task"
+        android:id="@+id/button_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#C70000"
         android:padding="12dp"
         android:text="Excluir"
         android:textAllCaps="false"
@@ -57,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_task_name" />
+        app:layout_constraintTop_toBottomOf="@id/button_mark_as_done" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

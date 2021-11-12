@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import br.com.ufersa.bd.todo.R
 import br.com.ufersa.bd.todo.data.RoomState
 import br.com.ufersa.bd.todo.databinding.ActivitySubtasksBinding
@@ -24,7 +26,9 @@ class SubtasksActivity : AppCompatActivity(), View.OnClickListener {
 
     private val binding by viewBindings(ActivitySubtasksBinding::inflate)
 
-    private val adapter = SubtaskAdapter()
+    private val adapter by lazy {
+        SubtaskAdapter(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +46,12 @@ class SubtasksActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setUpRecyclerView() {
         binding.recyclerViewSubtasks.adapter = adapter
+        binding.recyclerViewSubtasks.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                RecyclerView.VERTICAL
+            )
+        )
         binding.recyclerViewSubtasks.hasFixedSize()
     }
 
