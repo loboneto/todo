@@ -11,10 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Todo">
         <activity
+            android:name=".presentation.auth.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.task.TasksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.auth.AuthActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.subtask.SubtasksActivity"
             android:exported="true" />
         <activity
-            android:name=".presentation.task.TasksActivity"
+            android:name=".presentation.launch.LauncherActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

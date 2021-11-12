@@ -14,6 +14,7 @@ interface TaskDataSource {
     fun delete(task: Task): Flow<RoomState<Unit>>
     fun get(taskId: Int): Flow<RoomState<Task>>
     fun getAll(): Flow<RoomState<List<Task>>>
+    fun getAll(userId: Int): Flow<RoomState<List<Task>>>
     fun markAsDone(taskId: Int, done: Boolean): Flow<RoomState<Unit>>
 }
 
@@ -58,6 +59,17 @@ class TaskDataSourceImpl @Inject constructor(
         emit(RoomState.Loading)
         try {
             val tasks: List<Task> = database.tasksDao().get()
+            emit(RoomState.Success(tasks))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(RoomState.Failure(e))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override fun getAll(userId: Int) = flow {
+        emit(RoomState.Loading)
+        try {
+            val tasks: List<Task> = database.tasksDao().getAll(userId)
             emit(RoomState.Success(tasks))
         } catch (e: Exception) {
             e.printStackTrace()

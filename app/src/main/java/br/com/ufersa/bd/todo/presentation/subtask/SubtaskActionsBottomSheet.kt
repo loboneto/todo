@@ -96,8 +96,7 @@ class SubtaskActionsBottomSheet : BottomSheetDialogFragment(), View.OnClickListe
     }
 
     private fun markAsDone(subtaskDoUpdate: Subtask) {
-        // TODO
-        viewModel.markAsDone(subtaskId, !subtaskDoUpdate.done).observe(this) { state ->
+        viewModel.markSubtaskAsDone(subtaskId, !subtaskDoUpdate.done).observe(this) { state ->
             when (state) {
                 RoomState.Loading -> {
                     binding?.progressCircular?.visibility = View.VISIBLE

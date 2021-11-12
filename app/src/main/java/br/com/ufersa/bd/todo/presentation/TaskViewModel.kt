@@ -27,8 +27,8 @@ class TaskViewModel @ViewModelInject constructor(
         emitSource(repository.get(taskId))
     }
 
-    fun getTasks() = liveData {
-        emitSource(repository.getAll())
+    fun getTasks(userId: Int) = liveData {
+        emitSource(repository.getAll(userId))
     }
 
     fun markAsDone(taskId: Int, done: Boolean) = liveData {

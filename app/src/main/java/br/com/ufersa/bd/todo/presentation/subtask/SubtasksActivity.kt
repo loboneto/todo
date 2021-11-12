@@ -56,17 +56,14 @@ class SubtasksActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun getSubtasks() {
-        Log.d("--->", "getSubtasks")
         viewModel.getSubtasks(taskIdentifier).observe(this) { state ->
             when (state) {
                 RoomState.Loading -> {
-                    Log.d("--->", "Loading")
                     binding.progressCircular.visibility = View.VISIBLE
                     binding.nestedData.visibility = View.GONE
                     binding.fabNewSubtask.visibility = View.GONE
                 }
                 is RoomState.Success -> {
-                    Log.d("--->", "Success: ${state.data.subtasks.size}")
                     binding.progressCircular.visibility = View.GONE
                     binding.nestedData.visibility = View.VISIBLE
                     binding.fabNewSubtask.visibility = View.VISIBLE
@@ -77,7 +74,6 @@ class SubtasksActivity : AppCompatActivity(), View.OnClickListener {
                     adapter.tasks = state.data.subtasks
                 }
                 is RoomState.Failure -> {
-                    Log.d("--->", "Failure: ${state.throwable.stackTraceToString()}")
                     binding.progressCircular.visibility = View.GONE
                     binding.nestedData.visibility = View.VISIBLE
                     binding.fabNewSubtask.visibility = View.VISIBLE

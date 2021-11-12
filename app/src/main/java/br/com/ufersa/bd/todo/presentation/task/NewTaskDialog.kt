@@ -1,5 +1,6 @@
 package br.com.ufersa.bd.todo.presentation.task
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,10 @@ import br.com.ufersa.bd.todo.R
 import br.com.ufersa.bd.todo.data.RoomState
 import br.com.ufersa.bd.todo.databinding.DialogNewTaskBinding
 import br.com.ufersa.bd.todo.domain.model.Task
+import br.com.ufersa.bd.todo.domain.utils.newActivity
 import br.com.ufersa.bd.todo.domain.utils.showToast
 import br.com.ufersa.bd.todo.presentation.TaskViewModel
+import br.com.ufersa.bd.todo.presentation.auth.AuthActivity
 import java.util.*
 
 class NewTaskDialog : DialogFragment(), View.OnClickListener {
@@ -20,6 +23,11 @@ class NewTaskDialog : DialogFragment(), View.OnClickListener {
     private val viewModel by activityViewModels<TaskViewModel>()
 
     private var binding: DialogNewTaskBinding? = null
+
+    private val userId: Int by lazy {
+        val pref = context?.getSharedPreferences("TODO", Context.MODE_PRIVATE)
+        pref?.getInt("userId", -1) as Int
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +40,9 @@ class NewTaskDialog : DialogFragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (userId == -1) {
+            activity?.newActivity(AuthActivity::class.java)
+        }
         setListeners()
     }
 
@@ -75,7 +86,8 @@ class NewTaskDialog : DialogFragment(), View.OnClickListener {
                         id = 0,
                         name = name,
                         done = false,
-                        updatedAt = Date().time
+                        updatedAt = Date().time,
+                        userId = userId
                     )
                     addTask(newTask)
                     return

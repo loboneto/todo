@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/013399631/Documents/workspace/projects/todo/app/src/main/res/layout/activity_auth.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/013399631/Documents/workspace/projects/todo/app/src/main/res/layout/activity_launcher.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/013399631/Documents/workspace/projects/todo/app/src/main/res/layout/activity_register.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/013399631/Documents/workspace/projects/todo/app/src/main/res/layout/activity_subtasks.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/013399631/Documents/workspace/projects/todo/app/src/main/res/layout/activity_tasks.xml" value="0.13385416666666666" />
         <entry key="..\:/Users/013399631/Documents/workspace/projects/todo/app/src/main/res/layout/adapter_subtask.xml" value="0.25416666666666665" />
@@ -12,6 +15,7 @@
         <entry key="..\:/Users/013399631/Documents/workspace/projects/todo/app/src/main/res/layout/bottom_sheet_task_actions.xml" value="0.264" />
         <entry key="..\:/Users/013399631/Documents/workspace/projects/todo/app/src/main/res/layout/dialog_new_subtask.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/013399631/Documents/workspace/projects/todo/app/src/main/res/layout/dialog_new_task.xml" value="0.264" />
+        <entry key="..\:/Users/013399631/Documents/workspace/projects/todo/app/src/main/res/menu/menu_home.xml" value="0.15104166666666666" />
         <entry key="..\:/Users/FranciscodeAssisLobo/Documents/workspace/ufersa/todo/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/FranciscodeAssisLobo/Documents/workspace/ufersa/todo/app/src/main/res/layout/activity_subtasks.xml" value="0.264" />
         <entry key="..\:/Users/FranciscodeAssisLobo/Documents/workspace/ufersa/todo/app/src/main/res/layout/adapter_subtask.xml" value="0.38125" />

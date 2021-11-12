@@ -13,6 +13,7 @@ interface TaskRepository {
     fun delete(task: Task): LiveData<RoomState<Unit>>
     fun get(taskId: Int): LiveData<RoomState<Task>>
     fun getAll(): LiveData<RoomState<List<Task>>>
+    fun getAll(userId: Int): LiveData<RoomState<List<Task>>>
     fun markAsDone(taskId: Int, done: Boolean): LiveData<RoomState<Unit>>
 }
 
@@ -34,6 +35,10 @@ class TaskRepositoryImpl @Inject constructor(
 
     override fun getAll() = liveData {
         emitSource(dataSource.getAll().asLiveData())
+    }
+
+    override fun getAll(userId: Int) = liveData {
+        emitSource(dataSource.getAll(userId).asLiveData())
     }
 
     override fun markAsDone(taskId: Int, done: Boolean) = liveData {
