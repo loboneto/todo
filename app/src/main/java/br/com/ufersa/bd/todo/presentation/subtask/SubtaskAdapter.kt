@@ -11,6 +11,7 @@ class SubtaskAdapter : RecyclerView.Adapter<SubtaskAdapter.SubtaskViewHolder>() 
     var tasks: List<Subtask> = emptyList()
         set(value) {
             field = value
+            notifyDataSetChanged()
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubtaskViewHolder {
@@ -24,7 +25,6 @@ class SubtaskAdapter : RecyclerView.Adapter<SubtaskAdapter.SubtaskViewHolder>() 
     }
 
     override fun getItemCount(): Int = tasks.size
-
 
     class SubtaskViewHolder(private val binding: AdapterSubtaskBinding) :
         RecyclerView.ViewHolder(binding.root) {

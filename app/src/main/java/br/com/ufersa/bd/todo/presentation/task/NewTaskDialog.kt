@@ -43,13 +43,22 @@ class NewTaskDialog : DialogFragment(), View.OnClickListener {
         viewModel.save(task).observe(this) { state ->
             when (state) {
                 RoomState.Loading -> {
-
+                    binding?.progressCircular?.visibility = View.VISIBLE
+                    binding?.editTextTaskName?.isEnabled = false
+                    binding?.buttonNewTask?.isEnabled = false
                 }
                 is RoomState.Success -> {
+                    binding?.progressCircular?.visibility = View.GONE
+                    binding?.editTextTaskName?.isEnabled = true
+                    binding?.buttonNewTask?.isEnabled = true
+                    activity?.showToast("Tarefa adicionada com sucesso!")
                     (activity as? TasksActivity)?.onRefresh()
                     dismiss()
                 }
                 is RoomState.Failure -> {
+                    binding?.progressCircular?.visibility = View.GONE
+                    binding?.editTextTaskName?.isEnabled = true
+                    binding?.buttonNewTask?.isEnabled = true
                     activity?.showToast("Erro ao salvar tarefa!")
                     dismiss()
                 }

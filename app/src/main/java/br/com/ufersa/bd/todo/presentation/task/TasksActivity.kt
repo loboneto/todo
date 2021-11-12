@@ -1,6 +1,7 @@
 package br.com.ufersa.bd.todo.presentation.task
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -53,13 +54,16 @@ class TasksActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onRefresh() {
+        Log.d("--->", "onRefresh")
         viewModel.getTasks().observe(this) { state ->
             when (state) {
                 RoomState.Loading -> {
+                    Log.d("--->", "Loading")
                     binding.swipeTasks.isRefreshing = true
                     binding.fabNewTask.hide()
                 }
                 is RoomState.Success -> {
+                    Log.d("--->", "Success: ${state.data.size}")
                     binding.swipeTasks.isRefreshing = false
                     adapter.tasks = state.data
                     if (state.data.isEmpty()) {
@@ -68,6 +72,7 @@ class TasksActivity : AppCompatActivity(), View.OnClickListener,
                     binding.fabNewTask.show()
                 }
                 is RoomState.Failure -> {
+                    Log.d("--->", "Failure: ${state.throwable.stackTraceToString()}")
                     binding.swipeTasks.isRefreshing = false
                     binding.fabNewTask.show()
                     showToast("Erro ao obter lista de tarefas")

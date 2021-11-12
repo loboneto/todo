@@ -46,13 +46,22 @@ class NewSubtaskDialog : DialogFragment(), View.OnClickListener {
         viewModel.save(subtask).observe(this) { state ->
             when (state) {
                 RoomState.Loading -> {
-
+                    binding?.progressCircular?.visibility = View.VISIBLE
+                    binding?.editTextTaskName?.isEnabled = false
+                    binding?.buttonNewTask?.isEnabled = false
                 }
                 is RoomState.Success -> {
+                    binding?.progressCircular?.visibility = View.GONE
+                    binding?.editTextTaskName?.isEnabled = true
+                    binding?.buttonNewTask?.isEnabled = true
+                    activity?.showToast("Sub-tarefa adicionada com sucesso!")
                     (activity as? SubtasksActivity)?.getSubtasks()
                     dismiss()
                 }
                 is RoomState.Failure -> {
+                    binding?.progressCircular?.visibility = View.GONE
+                    binding?.editTextTaskName?.isEnabled = true
+                    binding?.buttonNewTask?.isEnabled = true
                     activity?.showToast("Erro ao salvar sub-tarefa!")
                     dismiss()
                 }

@@ -8,13 +8,13 @@ import br.com.ufersa.bd.todo.domain.model.TaskAndSubtask
 @Dao
 interface SubtaskDao {
     @Insert(onConflict = REPLACE)
-    fun save(subtask: Subtask)
+    suspend fun save(subtask: Subtask)
 
     @Delete
-    fun delete(subtask: Subtask)
+    suspend fun delete(subtask: Subtask)
 
     @Query("SELECT * FROM task")
-    fun getAll(): List<TaskAndSubtask>
+    suspend fun getAll(): List<TaskAndSubtask>
 
     @Transaction
     @Query("SELECT * FROM task WHERE id = :taskId")

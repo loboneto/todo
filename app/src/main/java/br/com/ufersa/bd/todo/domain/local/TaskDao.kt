@@ -7,17 +7,17 @@ import br.com.ufersa.bd.todo.domain.model.Task
 @Dao
 interface TaskDao {
     @Insert(onConflict = REPLACE)
-    fun save(task: Task)
+    suspend fun save(task: Task)
 
     @Delete
-    fun delete(task: Task)
+    suspend fun delete(task: Task)
 
     @Transaction
     @Query("SELECT * FROM Task where id = :taskId")
-    fun get(taskId: Int): Task
+    suspend fun get(taskId: Int): Task
 
     @Query("SELECT * FROM Task")
-    fun get(): List<Task>
+    suspend fun get(): List<Task>
 
 //    @Transaction
 //    suspend fun replace(task: Task) {

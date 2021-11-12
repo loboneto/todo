@@ -15,6 +15,7 @@ class TaskAdapter(private val activity: TasksActivity) :
     var tasks: List<Task> = emptyList()
         set(value) {
             field = value
+            notifyDataSetChanged()
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
