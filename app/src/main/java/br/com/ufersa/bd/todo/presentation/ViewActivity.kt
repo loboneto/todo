@@ -17,6 +17,13 @@ class ViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        supportActionBar?.title = "Visão PDF"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.pdfView.fromUri(uriView).load()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 }

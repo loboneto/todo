@@ -25,16 +25,16 @@ interface TaskDao {
     suspend fun getAll(userId: Int): List<Task>
 
     @Transaction
-    @Query("UPDATE Task SET done = :done WHERE id = :taskId AND updatedAt = :updatedAt")
-    fun markAsDone(taskId: Int, updatedAt: Long, done: Boolean = true): Int
+    @Query("UPDATE Task SET done = :done WHERE id = :taskId")
+    fun markAsDone(taskId: Int, done: Boolean = true): Int
 
     @Transaction
     @Query("UPDATE Subtask SET done = :done WHERE taskId = :taskId")
     fun markSubtasksAsDone(taskId: Int, done: Boolean = true): Int
 
     @Transaction
-    suspend fun makeDone(taskId: Int, updatedAt: Long, done: Boolean) {
-        markAsDone(taskId, updatedAt, done)
+    suspend fun makeDone(taskId: Int, done: Boolean) {
+        markAsDone(taskId, done)
         markSubtasksAsDone(taskId, done)
     }
 }

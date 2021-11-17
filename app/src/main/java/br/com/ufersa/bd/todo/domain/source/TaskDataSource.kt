@@ -85,8 +85,7 @@ class TaskDataSourceImpl @Inject constructor(
     override fun markAsDone(taskId: Int, done: Boolean) = flow {
         emit(RoomState.Loading)
         try {
-            val date = Date().time
-            database.tasksDao().makeDone(taskId, date, done)
+            database.tasksDao().makeDone(taskId, done)
             emit(RoomState.Success(Unit))
         } catch (e: Exception) {
             e.printStackTrace()
