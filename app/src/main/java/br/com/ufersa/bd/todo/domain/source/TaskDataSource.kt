@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import java.util.*
 import javax.inject.Inject
 
 interface TaskDataSource {
@@ -84,7 +85,8 @@ class TaskDataSourceImpl @Inject constructor(
     override fun markAsDone(taskId: Int, done: Boolean) = flow {
         emit(RoomState.Loading)
         try {
-            database.tasksDao().makeDone(taskId, done)
+            val date = Date().time
+            database.tasksDao().makeDone(taskId, date, done)
             emit(RoomState.Success(Unit))
         } catch (e: Exception) {
             e.printStackTrace()
