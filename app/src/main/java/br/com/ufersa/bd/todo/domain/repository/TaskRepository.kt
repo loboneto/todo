@@ -5,6 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import br.com.ufersa.bd.todo.data.RoomState
 import br.com.ufersa.bd.todo.domain.model.Task
+import br.com.ufersa.bd.todo.domain.model.UserDetails
 import br.com.ufersa.bd.todo.domain.source.TaskDataSource
 import javax.inject.Inject
 
@@ -15,6 +16,7 @@ interface TaskRepository {
     fun getAll(): LiveData<RoomState<List<Task>>>
     fun getAll(userId: Int): LiveData<RoomState<List<Task>>>
     fun markAsDone(taskId: Int, done: Boolean): LiveData<RoomState<Unit>>
+    fun getPdfView(): LiveData<RoomState<List<UserDetails>>>
 }
 
 class TaskRepositoryImpl @Inject constructor(
@@ -43,5 +45,9 @@ class TaskRepositoryImpl @Inject constructor(
 
     override fun markAsDone(taskId: Int, done: Boolean) = liveData {
         emitSource(dataSource.markAsDone(taskId, done).asLiveData())
+    }
+
+    override fun getPdfView() = liveData {
+        emitSource(dataSource.getView().asLiveData())
     }
 }

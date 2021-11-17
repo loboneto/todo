@@ -1,8 +1,11 @@
 package br.com.ufersa.bd.todo.domain.source
 
+import android.util.Log
 import br.com.ufersa.bd.todo.data.RoomState
 import br.com.ufersa.bd.todo.domain.local.TasksDatabase
+import br.com.ufersa.bd.todo.domain.local.ViewDao
 import br.com.ufersa.bd.todo.domain.model.Task
+import br.com.ufersa.bd.todo.domain.model.UserDetails
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,6 +19,7 @@ interface TaskDataSource {
     fun getAll(): Flow<RoomState<List<Task>>>
     fun getAll(userId: Int): Flow<RoomState<List<Task>>>
     fun markAsDone(taskId: Int, done: Boolean): Flow<RoomState<Unit>>
+    fun getView(): Flow<RoomState<List<UserDetails>>>
 }
 
 class TaskDataSourceImpl @Inject constructor(
@@ -84,6 +88,17 @@ class TaskDataSourceImpl @Inject constructor(
             emit(RoomState.Success(Unit))
         } catch (e: Exception) {
             e.printStackTrace()
+            emit(RoomState.Failure(e))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override fun getView() = flow {
+        emit(RoomState.Loading)
+        try {
+            val view = database.viewDao().getView()
+            emit(RoomState.Success(view))
+        } catch (e: Exception) {
+            Log.d("--->", "Exc: ${e.stackTrace}")
             emit(RoomState.Failure(e))
         }
     }.flowOn(Dispatchers.IO)

@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 28
 
     defaultConfig {
         applicationId "br.com.ufersa.bd.todo"
         minSdk 21
-        targetSdk 30
+        targetSdk 28
         versionCode 1
         versionName "1.0"
 
@@ -67,4 +67,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.4.1'
+
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 }

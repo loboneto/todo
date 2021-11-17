@@ -60,4 +60,12 @@ class TaskViewModel @ViewModelInject constructor(
     }
 
     // endregion SubTask
+
+    // region View
+
+    fun getView() = liveData {
+        emitSource(repository.getPdfView())
+    }
+
+    // endregion View
 }
